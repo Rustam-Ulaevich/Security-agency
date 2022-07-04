@@ -1,32 +1,85 @@
-import scss from './index.scss'
+import {Card} from "./components/Card";
+import {Header} from "./components/Header";
+import {ShoppingCart} from "./components/ShoppingCart";
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header>
-          <div className='headerLeft'>
-              <img src='/image/scale_1200.webp' height={'20px'} />
-              <div className='headerLabel'>
-                  <h3>Guardians of the Galaxy</h3>
-                  <p>Security agency</p>
-              </div>
-          </div>
-          <ul className='headerRight'>
-              <li>
-                  <img src='/image/cart.png'/>
-                  <span>5600 $</span>
-              </li>
-              <li>
-                  <img src='/image/user.png' height={'20px'}/>
-              </li>
-          </ul>
-      </header>
-        <div className='content'>
-            <h3>All the guards</h3>
-            ....
+    return (
+        <div className="App clear">
+
+            <ShoppingCart/>
+
+            <Header/>
+            <div className='content p-40'>
+
+                <div className='d-flex justify-between  mb-40'>
+                    <h3>All the guards</h3>
+                    <div className='search d-flex align-center'>
+                        <img src='/image/lupa.png' height={20} alt='search'/>
+                        <input placeholder='Search...'/>
+                    </div>
+                </div>
+
+                <div className='d-flex'>
+
+                    <Card/>
+
+                    <div className='card'>
+                        <div className='like'>
+                            <img src='/image/like.svg' alt='liked'/>
+                        </div>
+                        <img src='/image/securiti/sprut.jpg' width='150' alt=''/>
+                        <h5>Комиcсар Катани</h5>
+                        <div className='d-flex justify-between align-center'>
+                            <div className='d-flex flex-column'>
+                                <span>Цена:</span>
+                                <b>0,5 литра</b>
+                            </div>
+                            <button className='button'>
+                                <img width={'11px'} height={'11px'} src='/image/plus.png'/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className='card'>
+                        <div className='like'>
+                            <img src='/image/unLike.svg' alt='liked'/>
+                        </div>
+                        <img src='/image/securiti/slide37.jpg' width='100' alt=''/>
+                        <h5> полицейский Макконе</h5>
+                        <div className='d-flex justify-between align-center'>
+                            <div className='d-flex flex-column'>
+                                <span>Цена:</span>
+                                <b>1500 $</b>
+                            </div>
+                            <button className='button'>
+                                <img width={'11px'} height={'11px'} src='/image/plus.png'/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className='card'>
+                        <div className='like'>
+                            <img src='/image/like.svg' alt='liked'/>
+                        </div>
+                        <img src='/image/securiti/musor.jpg' width='100' alt=''/>
+                        <h5>Полицейский с Рублёвки</h5>
+                        <div className='d-flex justify-between align-center'>
+                            <div className='d-flex flex-column'>
+                                <span>Цена:</span>
+                                <b>50000 руб.</b>
+                            </div>
+                            <button className='button'>
+                                <img width={'11px'} height={'11px'} src='/image/plus.png'/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;

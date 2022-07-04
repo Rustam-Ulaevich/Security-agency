@@ -1,10 +1,15 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  background-image: url("https://avatars.mds.yandex.net/i?id=9dd1ff45228c7b678650695043adfeac-5877309-images-thumbs&n=13") ;
+  font-family: 'Inter Thin 100', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  background-image: url("https://avatars.mds.yandex.net/i?id=9dd1ff45228c7b678650695043adfeac-5877309-images-thumbs&n=13");
 }
+
+* {
+  font-family: 'Inter', system-ui;
+}
+
 .App {
   background: #FFFFFF;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
@@ -15,19 +20,218 @@ body {
 }
 
 header {
+  border-bottom: 1px solid #dcdcdc;
+
+  img {
+    margin-right: 15px;
+  }
+
+  h1 {
+    margin: 0 0 0 5px;
+  }
+
+  p {
+    margin: 0 0 0 6px;
+  }
+}
+
+.content {
+  h3 {
+    margin: 0;
+  }
+}
+
+.card {
+  border: 1px solid #d7cfcf;
+  padding: 30px;
+  width: 220px;
+  border-radius: 40px;
+  margin-right: 30px;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 10px 20px 30px rgba(30, 46, 180, 0.56);
+    transform: translateY(-5px);
+  }
+
+  .like {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  span {
+    font-size: 12px;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  b {
+    font-size: 13px;
+  }
+
+  h5 {
+    font-weight: 400;
+    font-size: 14px;
+
+  }
+
+}
+
+.button {
+  background: #ffffff;
+  border: 1px solid #999595;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+}
+
+.search {
+  border: 1px solid #d0cccc;
+  border-radius: 10px;
+  padding: 0 15px;
+
+  img {
+    //opacity: 90;
+    //padding: 1px;
+  }
+
+  input {
+    border: 0;
+    padding: 13px;
+    font-size: 16px;
+    width: 200px;
+  }
+}
+
+.shadowShoppingCart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+
+}
+
+.shoppingCart {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  position: absolute;
+  width: 420px;
+  height: 100%;
+  right: 0;
+  background: #FFFFFF;
+  box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+  padding: 30px;
 
-  .headerLabel {
-    display: flex;
-    align-items: center;
+  .items {
+    overflow: auto;
+    margin-bottom: 40px;
+  }
 
-    img {
-      margin-right: 15px;
+  h2 {
+    margin: 0;
+  }
+
+  .items {
+    flex: 1;
+  }
+}
+
+.total {
+  ul {
+    display: block;
+    margin-bottom: 40px !important;
+
+    li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 20px;
+
+      div {
+        flex: 1;
+        height: 1px;
+        border: 1px dashed #d0cccc;
+        position: relative;
+        top: -4px;
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .greenButton {
+    position: relative;
+
+    &:hover {
+      img {
+        transform: translateX(10px);
+      }
     }
 
-    h3, p {
-      margin: 0;
+    img {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      transition: transform 0.2s ease-in-out;
     }
   }
 }
+
+.greenButton {
+  width: 100%;
+  height: 55px;
+  background: #9DD558;
+  border-radius: 18px;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #b5e876;
+    box-shadow: 10px 10px 20px rgba(171, 239, 153, 0.56);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background: #83b642;
+  }
+}
+
+
+.shoppingCartItem {
+  border: 1px solid #a39a9a;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 7px;
+
+  p {
+    font-size: 16px;
+  }
+
+  b {
+    font-size: 14px;
+  }
+
+  .removeBtn {
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+      box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+      cursor: pointer;
+    }
+  }
+
+}
+
+
+
+
