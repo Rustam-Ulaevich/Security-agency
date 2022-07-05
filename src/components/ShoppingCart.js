@@ -8,7 +8,7 @@ export function ShoppingCart() {
 
                 <div className="items">
                     <div className="shoppingCartItem d-flex align-center mb-20">
-                        <img className='m-10' src="/image/securiti/borodach_page.jpg" width='50' alt=""/>
+                        <img className='m-10' src="/image/security/borodach_page.jpg" width='50' alt=""/>
                         <div className='mr-20'>
                             <p className='mb-5'>Охраник Александррр Боррродач</p>
                             <b>0,5 литра</b>
@@ -17,7 +17,7 @@ export function ShoppingCart() {
                     </div>
 
                     <div className="shoppingCartItem d-flex align-center mb-20">
-                        <img className='m-10' src="/image/securiti/borodach_page.jpg" width='50' alt=""/>
+                        <img className='m-10' src="/image/security/borodach_page.jpg" width='50' alt=""/>
                         <div className='mr-20'>
                             <p className='mb-5'>Охраник Александррр Боррродач</p>
                             <b>0,5 литра</b>
