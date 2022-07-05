@@ -1,29 +1,24 @@
-export function ShoppingCart() {
+export function ShoppingCart({onClickCart, items=[]}) {
+
     return (
         <div  className='shadowShoppingCart'>
             <div className='shoppingCart'>
                 <h2 className='d-flex justify-between mb-20'>Cart
-                    <img className='removeBtn cu-p' src='/image/removeClick.svg' alt='Remove'/>
+                    <img onClick={onClickCart} className='removeBtn cu-p' src='/image/removeClick.svg' alt='Remove'/>
                 </h2>
 
                 <div className="items">
-                    <div className="shoppingCartItem d-flex align-center mb-20">
-                        <img className='m-10' src="/image/security/borodach_page.jpg" width='50' alt=""/>
-                        <div className='mr-20'>
-                            <p className='mb-5'>Охраник Александррр Боррродач</p>
-                            <b>0,5 литра</b>
-                        </div>
-                        <img className='removeBtn' src='/image/removeClick.svg' alt='Remove'/>
-                    </div>
 
-                    <div className="shoppingCartItem d-flex align-center mb-20">
-                        <img className='m-10' src="/image/security/borodach_page.jpg" width='50' alt=""/>
-                        <div className='mr-20'>
-                            <p className='mb-5'>Охраник Александррр Боррродач</p>
-                            <b>0,5 литра</b>
+                    {items.map( i => (
+                        <div className="shoppingCartItem d-flex align-center mb-20">
+                            <img className='m-10' src={i.image} width={100} alt=""/>
+                            <div className='mr-20'>
+                                <p className='mb-5'>{i.title}</p>
+                                <b>{i.price}</b>
+                            </div>
+                            <img className='removeBtn' src='/image/removeClick.svg' alt='Remove'/>
                         </div>
-                        <img className='removeBtn' src='/image/removeClick.svg' alt='Remove'/>
-                    </div>
+                    ))}
                 </div>
 
                 <div className='total'>
