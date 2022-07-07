@@ -8,8 +8,9 @@ import {useEffect, useState} from "react";
 function App() {
     const [items, setItems] = useState([])
     const [itemCart, setItemCart] = useState([])
+    const [searchValue, setSearchValue] = useState([])
     const [openCart, setOpenCart] = useState(false)
-    console.log(items)
+    console.log(searchValue)
 
     useEffect( () => {
         fetch('https://62c3ffff7d83a75e39ecd122.mockapi.io/items')
@@ -45,27 +46,34 @@ function App() {
       setItemCart([...itemCart, obj])
     }
 
+    const onChangeSearchInput = (e) => {
+        setSearchValue(e.currentTarget.value)
+
+    }
+
     return (
         <div className="App clear">
             {openCart && <ShoppingCart items={itemCart} onClickCart={()=>setOpenCart(!openCart)}/>}
             <Header onClickCart={()=>setOpenCart(!openCart)}/>
             <div className='content p-40'>
                 <div className='d-flex justify-between  mb-40'>
-                    <h3>All the guards</h3>
+                    <h3>{searchValue ? `Поиск по запросу: "${searchValue}" :'Все охранники`}</h3>
                     <div className='search d-flex align-center'>
                         <img src='/image/lupa.png' height={20} alt='search'/>
-                        <input placeholder='Search...'/>
+                        <input value={searchValue} onChange={onChangeSearchInput} placeholder='Search...' />
                     </div>
                 </div>
 
                 <div className='d-flex'>
 
-                    {items.map( item => (
-                        <Card title={item.title}
-                              price={item.price}
-                              image={item.imageUrl}
-                              onClickLike={()=> console.log('added like')}
-                              onClickPlus={(obj)=> addItemCart(obj)}
+                    {items.map( (item, index) => (
+                        <Card
+                            key={index}
+                            title={item.title}
+                            price={item.price}
+                            image={item.imageUrl}
+                            onClickLike={()=> console.log('added like')}
+                            onClickPlus={(obj)=> addItemCart(obj)}
                         />))}
 
                 </div>
