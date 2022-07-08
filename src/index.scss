@@ -56,6 +56,21 @@ header {
   border: 1px solid #d0cccc;
   border-radius: 10px;
   padding: 0 15px;
+  position: relative;
+
+  ///////
+
+
+
+  //.clear {
+  //  position: absolute;
+  //  right: 0;
+  //  width: 18px;
+  //  height: 18px;
+  //  top: 14px;
+  //  right: 15px;
+  //}
+  //////
 
   img {
     //opacity: 90;
@@ -82,6 +97,7 @@ header {
 
 }
 
+
 .shoppingCart {
   display: flex;
   flex-direction: column;
@@ -105,7 +121,21 @@ header {
   .items {
     flex: 1;
   }
+
+  .buttonGoBack{
+    position: absolute;
+    width: 245px;
+    height: 55px;
+    left: 935px;
+    top: 635px;
+
+    background: #9DD458;
+    border-radius: 18px;
+
+  }
 }
+
+
 
 .total {
   ul {
@@ -166,6 +196,13 @@ header {
 
   &:active {
     background: #83b642;
+  }
+
+  img {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    transition: transform 0.2s ease-in-out;
   }
 }
 

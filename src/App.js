@@ -1,7 +1,9 @@
+import axios from "axios";
 import {Card} from "./components/Card/Card";
 import {Header} from "./components/Header";
 import {ShoppingCart} from "./components/ShoppingCart";
 import {useEffect, useState} from "react";
+
 
 
 
@@ -13,14 +15,16 @@ function App() {
     console.log(searchValue)
 
     useEffect( () => {
-        fetch('https://62c3ffff7d83a75e39ecd122.mockapi.io/items')
-            .then((res) => {
-                return res.json();
-            })
-            .then((json) => {
-                setItems(json)
-            });
+        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items').then(res => {
+            setItems(res.data);
+        });
+        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart').then(res => {
+            setItemCart(res.data);
+        });
     }, []);
+
+
+
     // [{
     //     "title": "Охранник Александррр Боррродач",
     //     "price": "0.5 литра",
@@ -43,7 +47,9 @@ function App() {
     //     }]
 
     const addItemCart = (obj) => {
-      setItemCart([...itemCart, obj])
+        axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
+      setItemCart((prev) => [...prev, obj])
+        console.log(itemCart)
     }
 
     const onChangeSearchInput = (e) => {
@@ -53,11 +59,23 @@ function App() {
     const clearSearch = () => {
         setSearchValue('')
     }
+    console.log(itemCart)
+
+    const removeItemCart = (id) => {
+        console.log(id)
+      // axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`
+
+        setItemCart( prev => prev.filter( i => i.id !== id))
+
+    }
+
+
 
     return (
         <div className="App clear">
-            {openCart && <ShoppingCart items={itemCart} onClickCart={()=>setOpenCart(!openCart)}/>}
-            <Header onClickCart={()=>setOpenCart(!openCart)}/>
+            {openCart && <ShoppingCart items={itemCart} onClickCart={()=>setOpenCart(!openCart)} removeItemCart={removeItemCart}/>}
+            <Header onClickCart={()=>setOpenCart(!openCart)}
+            />
             <div className='content p-40'>
                 <div className='d-flex justify-between  mb-40'>
                     <h3>{searchValue ? `Search by: "${searchValue}"` : 'All the guards'}</h3>
