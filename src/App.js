@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 function App() {
     const [items, setItems] = useState([])
     const [itemCart, setItemCart] = useState([])
-    const [searchValue, setSearchValue] = useState([])
+    const [searchValue, setSearchValue] = useState('')
     const [openCart, setOpenCart] = useState(false)
     console.log(searchValue)
 
@@ -48,7 +48,10 @@ function App() {
 
     const onChangeSearchInput = (e) => {
         setSearchValue(e.currentTarget.value)
+    }
 
+    const clearSearch = () => {
+        setSearchValue('')
     }
 
     return (
@@ -57,16 +60,17 @@ function App() {
             <Header onClickCart={()=>setOpenCart(!openCart)}/>
             <div className='content p-40'>
                 <div className='d-flex justify-between  mb-40'>
-                    <h3>{searchValue ? `Поиск по запросу: "${searchValue}" :'Все охранники`}</h3>
+                    <h3>{searchValue ? `Search by: "${searchValue}"` : 'All the guards'}</h3>
                     <div className='search d-flex align-center'>
                         <img src='/image/lupa.png' height={20} alt='search'/>
                         <input value={searchValue} onChange={onChangeSearchInput} placeholder='Search...' />
+                        { searchValue && <img className='removeBtn' onClick={clearSearch} src='/image/removeClick.svg' alt='Remove'/>}
                     </div>
                 </div>
 
                 <div className='d-flex'>
 
-                    {items.map( (item, index) => (
+                    {items.filter( item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map( (item, index) => (
                         <Card
                             key={index}
                             title={item.title}
