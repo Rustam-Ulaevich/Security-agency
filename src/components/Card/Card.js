@@ -5,16 +5,23 @@ import {useState} from "react";
 export function Card({title, image, price, onClickLike, onClickPlus}) {
 
     let [isAdded, setIsAdded] = useState(true)
+    let [isLike, setIsLike] = useState(true)
 
     const onClickButton = () => {
         onClickPlus({title, image, price})
-        setIsAdded(!isAdded)}
+        setIsAdded(!isAdded)
+
+    }
+
+    const onClickLikeButton = () => {
+        setIsLike(!isLike)
+    }
 
 
     return (
         <div className={styles.card}>
-            <div className={styles.like}>
-                <img src='/image/like.svg' onClick={onClickLike} alt='liked'/>
+            <div className={styles.like} onClick={onClickLikeButton}>
+                <img src={ isLike ? '/image/unlike.svg' : '/image/like.svg' } alt='liked'/>
             </div>
             <img src={image} width='100' alt=''/>
             <h5>{title}</h5>

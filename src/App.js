@@ -63,7 +63,7 @@ function App() {
 
     const removeItemCart = (id) => {
         console.log(id)
-      // axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`
+      axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`);
 
         setItemCart( prev => prev.filter( i => i.id !== id))
 
