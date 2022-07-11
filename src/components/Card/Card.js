@@ -14,6 +14,7 @@ export function Card({title, image, price, onClickLike, onClickPlus}) {
     }
 
     const onClickLikeButton = () => {
+        onClickLike({title, image, price})
         setIsLike(!isLike)
     }
 
@@ -21,7 +22,7 @@ export function Card({title, image, price, onClickLike, onClickPlus}) {
     return (
         <div className={styles.card}>
             <div className={styles.like} onClick={onClickLikeButton}>
-                <img src={ isLike ? '/image/unlike.svg' : '/image/like.svg' } alt='liked'/>
+                <img src={ isLike ? '/image/unlike.svg' : '/image/like2.svg' } alt='liked'/>
             </div>
             <img src={image} width='100' alt=''/>
             <h5>{title}</h5>
