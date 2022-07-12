@@ -13,7 +13,7 @@ function App() {
     const [isLike, setIsLike] = useState([])
     const [searchValue, setSearchValue] = useState('')
     const [openCart, setOpenCart] = useState(false)
-    console.log(searchValue)
+
 
     useEffect(() => {
         axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items').then(res => {
@@ -22,26 +22,41 @@ function App() {
         axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart').then(res => {
             setItemCart(res.data);
         });
+        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes').then(res => {
+            setIsLike(res.data);
+        });
     }, []);
 
     const addItemCart = (obj) => {
         axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
         setItemCart((prev) => [...prev, obj])
     }
+
     const onChangeSearchInput = (e) => {
         setSearchValue(e.currentTarget.value)
     }
+
     const clearSearch = () => {
         setSearchValue('')
     }
+
     const removeItemCart = (id) => {
-        console.log(id)
         axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`);
         setItemCart(prev => prev.filter(i => i.id !== id))
     }
+
     const addLikes = (obj) => {
-        axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes', obj);
-        setIsLike((prev) => [...prev, obj])
+        if(isLike.find( likeObj => likeObj.id == obj.id)) {
+            axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
+            setIsLike(prev => prev.filter(i => i.id !== obj.id))
+        } else {
+            axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes', obj);
+            setIsLike((prev) => [...prev, obj])
+        }
+    }
+
+    const onClickButton = () => {
+
     }
 
     return (
@@ -60,7 +75,10 @@ function App() {
                         addItemCart={addItemCart}
 
                     />} />
-                <Route path='/Likes' element={<Likes/> } />
+                <Route path='/Likes' element={
+                    <Likes items={isLike}
+                           addLikes={addLikes}
+                    /> } />
             </Routes>
 
         </div>

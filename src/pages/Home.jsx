@@ -19,9 +19,10 @@ export function Home({searchValue, addItemCart, addLikes, clearSearch, items, on
                             key={index}
                             title={item.title}
                             price={item.price}
-                            image={item.imageUrl}
+                            image={item.image}
                             onClickLike={(obj) => addLikes(obj)}
                             onClickPlus={(obj) => addItemCart(obj)}
+                            liked={true}
                         />))}
                 </div>
             </div>
