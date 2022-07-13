@@ -1,25 +1,20 @@
 import styles from './Card.module.scss'
 import {useState} from "react";
 
-
 export function Card({id, title, image, price, onClickLike, onClickPlus, liked}) {
 
     let [isAdded, setIsAdded] = useState(true)
     let [isLike, setIsLike] = useState(liked)
 
-
-
     const onClickButton = () => {
         onClickPlus({title, image, price})
         setIsAdded(!isAdded)
-
     }
 
     const onClickLikeButton = () => {
         onClickLike({id, title, image, price})
         setIsLike(!isLike)
     }
-
 
     return (
         <div className={styles.card}>
@@ -33,11 +28,9 @@ export function Card({id, title, image, price, onClickLike, onClickPlus, liked})
                     <span>Цена:</span>
                     <b>{price}</b>
                 </div>
-
-                    <img className={styles.plus}
-                         onClick={onClickButton}
-                         src={isAdded ? '/image/plus.svg' : '/image/cheked.svg'}/>
-
+                <img className={styles.plus}
+                     onClick={onClickButton}
+                     src={isAdded ? '/image/plus.svg' : '/image/cheked.svg'}/>
             </div>
         </div>
     )

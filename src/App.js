@@ -28,8 +28,12 @@ function App() {
     }, []);
 
     const addItemCart = (obj) => {
-        axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
-        setItemCart((prev) => [...prev, obj])
+        if(itemCart.find( i => i.id == obj.id)){
+setItemCart( prev => prev.filter( i => i.id !== obj.id))
+        }else{
+            axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
+            setItemCart((prev) => [...prev, obj])
+        }
     }
 
     const onChangeSearchInput = (e) => {
@@ -45,18 +49,21 @@ function App() {
         setItemCart(prev => prev.filter(i => i.id !== id))
     }
 
-    const addLikes = (obj) => {
-        if(isLike.find( likeObj => likeObj.id == obj.id)) {
-            axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
-            setIsLike(prev => prev.filter(i => i.id !== obj.id))
-        } else {
-            axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes', obj);
-            setIsLike((prev) => [...prev, obj])
+    const addLikes = async (obj) => {
+        try {
+            if(isLike.find( likeObj => likeObj.id == obj.id)) {
+                axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
+                setIsLike(prev => prev.filter(i => i.id !== obj.id))
+            } else {
+                const {data} = await axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes', obj);
+                setIsLike((prev) => [...prev, data])
+            }
+        } catch (error) {
+            alert('Could not add to liked')
         }
     }
 
     const onClickButton = () => {
-
     }
 
     return (
