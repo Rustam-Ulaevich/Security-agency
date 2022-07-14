@@ -1,6 +1,10 @@
 import {Card} from "../components/Card/Card";
+import {useContext} from "react";
+import {AppContext} from "../context";
 
-export function Likes({items, addLikes}) {
+export function Likes() {
+    const {isLike, addLikes} = useContext(AppContext)
+
     return(
             <div className='content p-40'>
                 <div className='d-flex justify-between  mb-40'>
@@ -8,7 +12,7 @@ export function Likes({items, addLikes}) {
                 </div>
 
                 <div className='d-flex'>
-                    {items.map((item, index) => (
+                    {isLike.map((item, index) => (
                             <Card
                                 key={index}
                                 liked={false}

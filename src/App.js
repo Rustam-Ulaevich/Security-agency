@@ -5,43 +5,41 @@ import {Header} from "./components/Header";
 import {ShoppingCart} from "./components/ShoppingCart";
 import {useEffect, useState} from "react";
 import {Likes} from "./pages/Likes";
+import {AppContext} from "./context";
+
+
 
 function App() {
-
     const [items, setItems] = useState([])
     const [itemCart, setItemCart] = useState([])
     const [isLike, setIsLike] = useState([])
     const [searchValue, setSearchValue] = useState('')
     const [openCart, setOpenCart] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
 
-    useEffect(() => {
-        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items').then(res => {
-            setItems(res.data);
-        });
-        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart').then(res => {
-            setItemCart(res.data);
-        });
-        axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes').then(res => {
-            setIsLike(res.data);
-        });
+    useEffect( () => {
+        async function fetchData() {
+            setIsLoading(true)
+            const shoppingCartResponce = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart');
+            const likesResponce = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes');
+            const itemsResponse  = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items');
+            setIsLoading(false)
+            setItemCart(shoppingCartResponce.data);
+            setIsLike(likesResponce.data);
+            setItems(itemsResponse.data);
+        }
+        fetchData()
     }, []);
 
     const addItemCart = (obj) => {
-        if(itemCart.find( i => i.id == obj.id)){
-setItemCart( prev => prev.filter( i => i.id !== obj.id))
-        }else{
+        if (itemCart.find(i => Number(i.id) === Number(obj.id))) {
+            axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
+            setItemCart(prev => prev.filter(i => Number(i.id) !== Number(obj.id)))
+        } else {
             axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
             setItemCart((prev) => [...prev, obj])
         }
-    }
-
-    const onChangeSearchInput = (e) => {
-        setSearchValue(e.currentTarget.value)
-    }
-
-    const clearSearch = () => {
-        setSearchValue('')
     }
 
     const removeItemCart = (id) => {
@@ -51,7 +49,7 @@ setItemCart( prev => prev.filter( i => i.id !== obj.id))
 
     const addLikes = async (obj) => {
         try {
-            if(isLike.find( likeObj => likeObj.id == obj.id)) {
+            if (isLike.find(likeObj => Number(likeObj.id) === Number(obj.id))) {
                 axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
                 setIsLike(prev => prev.filter(i => i.id !== obj.id))
             } else {
@@ -63,32 +61,42 @@ setItemCart( prev => prev.filter( i => i.id !== obj.id))
         }
     }
 
-    const onClickButton = () => {
+    const onChangeSearchInput = (e) => {
+        setSearchValue(e.currentTarget.value)
     }
 
+    const isItemAdded = (id) => {
+        return itemCart.some( obj => Number(obj.id) === Number(id))
+    }
+
+    // const clearSearch = () => {
+    //     setSearchValue('')
+    // }
+
+
     return (
-        <div className="App clear">
-            {openCart &&
-            <ShoppingCart items={itemCart} onClickCart={() => setOpenCart(!openCart)} removeItemCart={removeItemCart}/>}
-            <Header onClickCart={ ()=>setOpenCart(!openCart)} />
-            <Routes>
-                <Route path='/' element={
-                    <Home
-                        searchValue={searchValue}
-                        onChangeSearchInput={onChangeSearchInput}
-                        clearSearch={clearSearch}
-                        items={items}
-                        addLikes={addLikes}
-                        addItemCart={addItemCart}
+        <AppContext.Provider value={{ items, itemCart, isLike, isItemAdded, addLikes, setOpenCart}}>
+            <div className="App clear">
+                {openCart &&
+                <ShoppingCart items={itemCart} onClickCart={() => setOpenCart(false)} removeItemCart={removeItemCart}/>}
+                <Header onClickCart={() => setOpenCart(true)}/>
+                <Routes>
+                    <Route path='/' element={
+                        <Home
+                            items={items}
+                            itemCart={itemCart}
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onChangeSearchInput={onChangeSearchInput}
+                            addLikes={addLikes}
+                            addItemCart={addItemCart}
+                            isLoading={isLoading}
+                        />}/>
+                    <Route path='/Likes' element={<Likes/>}/></Routes>
 
-                    />} />
-                <Route path='/Likes' element={
-                    <Likes items={isLike}
-                           addLikes={addLikes}
-                    /> } />
-            </Routes>
+            </div>
+        </AppContext.Provider>
 
-        </div>
     );
 }
 

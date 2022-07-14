@@ -1,3 +1,5 @@
+import {Info} from "./info";
+
 export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
 
     return (
@@ -9,10 +11,10 @@ export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
 
                 {
                     items.length > 0 ?
-                        <>
+                        <div className='d-flex flex-column flex'>
                         <div className="items">
-                            {items.map(i => (
-                                <div className="shoppingCartItem d-flex align-center mb-20">
+                            {items.map((i) => (
+                                <div key={i.id} className="shoppingCartItem d-flex align-center mb-20">
                                     <img className='m-10' src={i.image} width={100} alt=""/>
                                     <div className='mr-20'>
                                         <p className='mb-5'>{i.title}</p>
@@ -41,24 +43,13 @@ export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
                                     <button className='greenButton'>Place an order<img src='/image/strelka.svg' alt='Arrow'/>
                                     </button>
                                 </div>
-                        </>
-
-
-
-                            :
-                            <div className='cartEmpty d-flex align-center justify-center flex-column flex'>
-                                <img src="/image/cartEmpty.svg" alt='cartEmpty'/>
-                                <h2>The cart is empty</h2>
-                                <p>Add at least one security guard to place an order</p>
-                                <button onClick={onClickCart} className='greenButton'>
-                                    <img  src='/image/strelka.svg' alt="cartEmpty"/>
-                                    You can't go back
-                                </button>
-                            </div>
-                            }
-
-
                         </div>
-                        </div>
-                    );
-                }
+                        :  (
+                            <Info title='The basket is empty'
+                                  description='Add at least one security guard to place an order'
+                                  image='/image/cartEmpty.svg' />
+                        )}
+            </div>
+        </div>
+    );
+}
