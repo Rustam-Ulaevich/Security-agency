@@ -75,7 +75,7 @@ function App() {
 
 
     return (
-        <AppContext.Provider value={{ items, itemCart, isLike, isItemAdded, addLikes, setOpenCart}}>
+        <AppContext.Provider value={{ items, itemCart, isLike, isItemAdded, addLikes, setOpenCart, setItemCart}}>
             <div className="App clear">
                 {openCart &&
                 <ShoppingCart items={itemCart} onClickCart={() => setOpenCart(false)} removeItemCart={removeItemCart}/>}
