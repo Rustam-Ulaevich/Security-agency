@@ -1,12 +1,15 @@
 import {Info} from "./info";
 import {useContext, useState} from "react";
 import {AppContext} from "../context";
+import axios from "axios";
 
 export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
-    const {setItemCart} = useContext(AppContext)
+    const {itemCart, setItemCart} = useContext(AppContext)
+    const [orderId, setOrderId] = useState(null)
     const [order, setOrder] = useState(false)
 
     const onClickOrder = () => {
+        axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/orders', itemCart);
         setOrder(true)
         setItemCart([])
     }

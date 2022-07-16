@@ -11,7 +11,7 @@ export function Card({
                          onClickLike,
                          onClickPlus,
                          liked = false,
-                         loading = false
+                         loading
                      }) {
 
     const {isItemAdded} = useContext(AppContext)
@@ -25,11 +25,12 @@ export function Card({
         onClickLike({id, title, image, price})
         setIsLike(!isLike)
     }
-
+debugger
     return (
         <div className={styles.card}>
             {
-                 loading ? (
+
+                 loading ?
                      <ContentLoader
                         speed={2}
                         width={130}
@@ -43,7 +44,7 @@ export function Card({
                         <rect x="0" y="189" rx="5" ry="5" width="81" height="15"/>
                         <rect x="0" y="230" rx="5" ry="5" width="70" height="25"/>
                         <rect x="118" y="230" rx="9" ry="9" width="32" height="32"/>
-                    </ContentLoader>) : (
+                    </ContentLoader> :
                     <>
                         <div className={styles.like} onClick={onClickLikeButton}>
                             <img src={isLike ? '/image/like2.svg' : '/image/unlike' +
@@ -61,7 +62,7 @@ export function Card({
                                  src={isItemAdded(id) ? '/image/cheked.svg' : '/image/plus.svg'}/>
                         </div>
                     </>
-                 )}
+                 }
         </div>
     )
 }

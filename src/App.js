@@ -51,7 +51,7 @@ function App() {
         try {
             if (isLike.find(likeObj => Number(likeObj.id) === Number(obj.id))) {
                 axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
-                setIsLike(prev => prev.filter(i => i.id !== obj.id))
+                setIsLike(prev => prev.filter(i => Number(i.id) !== Number(obj.id)))
             } else {
                 const {data} = await axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes', obj);
                 setIsLike((prev) => [...prev, data])

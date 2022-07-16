@@ -22,7 +22,7 @@ export function Home({
             item.title.toLowerCase().includes(searchValue.toLowerCase()),
         );
 
-        return ( isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
+        return ( isLoading ? [...Array(4)] : filteredItems).map((item, index) => (
             <Card
                 key={index}
                 onClickLike={(obj) => addLikes(obj)}
