@@ -58,10 +58,6 @@ header {
   padding: 0 15px;
   position: relative;
 
-  ///////
-
-
-
   //.clear {
   //  position: absolute;
   //  right: 0;
@@ -70,7 +66,6 @@ header {
   //  top: 14px;
   //  right: 15px;
   //}
-  //////
 
   img {
     //opacity: 90;
@@ -96,7 +91,6 @@ header {
   z-index: 1;
 
 }
-
 
 .shoppingCart {
   display: flex;
@@ -135,8 +129,6 @@ header {
   }
 }
 
-
-
 .total {
   ul {
     display: block;
@@ -160,6 +152,10 @@ header {
 
   .greenButton {
     position: relative;
+
+    &:disabled {
+
+    }
 
     &:hover {
       img {
@@ -188,6 +184,11 @@ header {
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 
+  &:disabled{
+    background-color: #d0cccc;
+    cursor: default;
+  }
+
   &:hover {
     background-color: #b5e876;
     box-shadow: 10px 10px 20px rgba(171, 239, 153, 0.56);
@@ -205,7 +206,6 @@ header {
     transition: transform 0.2s ease-in-out;
   }
 }
-
 
 .shoppingCartItem {
   border: 1px solid #a39a9a;
@@ -231,8 +231,20 @@ header {
       cursor: pointer;
     }
   }
-
 }
+
+@keyframes button-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 
 
 
