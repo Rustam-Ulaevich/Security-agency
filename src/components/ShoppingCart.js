@@ -6,10 +6,12 @@ import axios from "axios";
 const delay = (ms) => new Promise( (resolve) => setTimeout(resolve, ms))
 
 export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
-    const {cartItems, setСartItems} = useContext(AppContext)
+    const {cartItems, setCartItems} = useContext(AppContext)
     const [orderId, setOrderId] = useState(null)
     const [order, setOrder] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    //const totalPrice2 = cartItems.reduce( (sum, obj) => obj.price + sum, 0)
 
     const onClickOrder = async () => {
         try {
@@ -20,7 +22,7 @@ export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
             //await axios.put('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', [])
             setOrderId(data.id)
             setOrder(true)
-            setСartItems([])
+            setCartItems([])
 
             for (let i=0; i<cartItems.length; i++){
                 const item = cartItems[i]
@@ -63,7 +65,7 @@ export function ShoppingCart({onClickCart, removeItemCart, items = []}) {
                                     <li className='d-flex justify-between'>
                                         <span>Total:</span>
                                         <div></div>
-                                        <b>350 руб</b>
+                                        <b>totalPrice2</b>
                                     </li>
                                     <li className='d-flex justify-between'>
                                         <span>Tax 13%:</span>

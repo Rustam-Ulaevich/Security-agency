@@ -17,6 +17,7 @@ function App() {
     const [openCart, setOpenCart] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
+    console.log(itemCart)
 
     useEffect( () => {
         async function fetchData() {
