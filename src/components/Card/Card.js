@@ -25,7 +25,7 @@ export function Card({
         onClickLike({id, title, image, price})
         setIsLike(!isLike)
     }
-debugger
+
     return (
         <div className={styles.card}>
             {
@@ -46,10 +46,10 @@ debugger
                         <rect x="118" y="230" rx="9" ry="9" width="32" height="32"/>
                     </ContentLoader> :
                     <>
-                        <div className={styles.like} onClick={onClickLikeButton}>
+                    { onClickLike && <div className={styles.like} onClick={onClickLikeButton}>
                             <img src={isLike ? '/image/like2.svg' : '/image/unlike' +
                                 '.svg'} alt='liked'/>
-                        </div>
+                        </div>}
                         <img src={image} width='100' alt=''/>
                         <h5>{title}</h5>
                         <div className='d-flex justify-between align-center'>
@@ -57,9 +57,9 @@ debugger
                                 <span>Цена:</span>
                                 <b>{price + ' rubles'}</b>
                             </div>
-                            <img className={styles.plus}
-                                 onClick={onClickButton}
-                                 src={isItemAdded(id) ? '/image/cheked.svg' : '/image/plus.svg'}/>
+                            {onClickPlus && <img className={styles.plus}
+                                                 onClick={onClickButton}
+                                                 src={isItemAdded(id) ? '/image/cheked.svg' : '/image/plus.svg'}/>}
                         </div>
                     </>
                  }
