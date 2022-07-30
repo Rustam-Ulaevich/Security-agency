@@ -18,30 +18,47 @@ function App() {
 
     useEffect(() => {
         async function fetchData() {
-            setIsLoading(true)
-            const shoppingCartResponce = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart');
-            const likesResponce = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes');
-            const itemsResponse = await axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items');
-            setIsLoading(false)
-            setItemCart(shoppingCartResponce.data);
-            setIsLike(likesResponce.data);
-            setItems(itemsResponse.data);
+            try {
+                const [shoppingCartResponce, likesResponce, itemsResponse] = await Promise.all([
+                    axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart'),
+                    axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/likes'),
+                    axios.get('https://62c3ffff7d83a75e39ecd122.mockapi.io/items')
+                ])
+                setIsLoading(false)
+                setItemCart(shoppingCartResponce.data);
+                setIsLike(likesResponce.data);
+                setItems(itemsResponse.data);
+            } catch (error) {
+                alert('Error when requesting data ;')
+            }
         }
-
         fetchData()
     }, []);
-    const addItemCart = (obj) => {
-        if (itemCart.find(i => Number(i.id) === Number(obj.id))) {
-            axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
-            setItemCart(prev => prev.filter(i => Number(i.id) !== Number(obj.id)))
-        } else {
-            axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
-            setItemCart((prev) => [...prev, obj])
+    const addItemCart = async (obj) => {
+        try {
+            if (itemCart.find(i => Number(i.parentId) === Number(obj.id))) {
+                setItemCart(prev => prev.filter(i => Number(i.id) !== Number(obj.id)))
+                await axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${obj.id}`);
+
+            } else {
+                setItemCart((prev) => [...prev, obj])
+                await axios.post('https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart', obj);
+
+            }
+        } catch (error) {
+            alert('Error when adding to the cart')
+            console.error(error)
         }
+
     }
     const removeItemCart = (id) => {
-        axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`);
-        setItemCart(prev => prev.filter(i => i.id !== id))
+        try {
+            axios.delete(`https://62c3ffff7d83a75e39ecd122.mockapi.io/shoppingCart/${id}`);
+            setItemCart(prev => prev.filter(i => Number(i.id) !== Number(id)))
+        } catch (error) {
+            alert('Error when deleting from the trash')
+            console.error(error)
+        }
     }
     const addLikes = async (obj) => {
         try {
@@ -54,17 +71,16 @@ function App() {
             }
         } catch (error) {
             alert('Could not add to liked')
+            console.error(error)
         }
     }
     const onChangeSearchInput = (e) => {
         setSearchValue(e.currentTarget.value)
     }
     const isItemAdded = (id) => {
-        return itemCart.some(obj => Number(obj.id) === Number(id))
+        return itemCart.some(obj => Number(obj.parentId) === Number(id))
     }
-    // const clearSearch = () => {
-    //     setSearchValue('')
-    // }
+    // const clearSearch = () => {setSearchValue('')}
 
     return (
         <AppContext.Provider value={{
@@ -81,10 +97,8 @@ function App() {
                     <ShoppingCart items={itemCart}
                                   onClickCart={() => setOpenCart(false)}
                                   removeItemCart={removeItemCart}
-                                  opened={openCart}
-                    />
+                                  opened={openCart}/>
                 </div>
-
 
                 <Header onClickCart={() => setOpenCart(true)}/>
                 <Routes>
@@ -104,7 +118,6 @@ function App() {
                 </Routes>
             </div>
         </AppContext.Provider>
-
     );
 }
 

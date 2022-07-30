@@ -5,6 +5,7 @@ import {AppContext} from "../../context";
 
 export function Card({
                          id,
+                         parentId,
                          title,
                          image,
                          price,
@@ -15,14 +16,15 @@ export function Card({
                      }) {
 
     const {isItemAdded} = useContext(AppContext)
-    let [isLike, setIsLike] = useState(liked)
+    const [isLike, setIsLike] = useState(liked)
+    const itemObj = {id, parentId: id, title, image, price}
 
     const onClickButton = () => {
-        onClickPlus({id, title, image, price})
+        onClickPlus(itemObj)
     }
 
     const onClickLikeButton = () => {
-        onClickLike({id, title, image, price})
+        onClickLike(itemObj)
         setIsLike(!isLike)
     }
 
@@ -30,8 +32,8 @@ export function Card({
         <div className={styles.card}>
             {
 
-                 loading ?
-                     <ContentLoader
+                loading ?
+                    <ContentLoader
                         speed={2}
                         width={130}
                         height={280}
@@ -46,7 +48,7 @@ export function Card({
                         <rect x="118" y="230" rx="9" ry="9" width="32" height="32"/>
                     </ContentLoader> :
                     <>
-                    { onClickLike && <div className={styles.like} onClick={onClickLikeButton}>
+                        {onClickLike && <div className={styles.like} onClick={onClickLikeButton}>
                             <img src={isLike ? '/image/like2.svg' : '/image/unlike' +
                                 '.svg'} alt='liked'/>
                         </div>}
@@ -62,7 +64,7 @@ export function Card({
                                                  src={isItemAdded(id) ? '/image/cheked.svg' : '/image/plus.svg'}/>}
                         </div>
                     </>
-                 }
+            }
         </div>
     )
 }

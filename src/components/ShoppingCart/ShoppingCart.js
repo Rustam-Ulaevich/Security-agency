@@ -48,7 +48,7 @@ export function ShoppingCart({onClickCart, removeItemCart, items = [], opened}) 
                 {
                     items.length > 0 ?
                         <div className='d-flex flex-column flex'>
-                            <div className="items">
+                            <div className="items flex">
                                 {items.map((i) => (
                                     <div key={i.id} className="shoppingCartItem d-flex align-center mb-20">
                                         <img className='m-10' src={i.image} width={100} alt=""/>
